@@ -1,0 +1,70 @@
+
+ <div class="container-fluid">
+      <div class="row">
+        <div class="col-10">
+          <h2>Mini Transactions for Account Number {{account.accountid}}</h2> 
+        </div> 
+        <div class="col-2">
+          <button class="btn btn-primary" (click)="getminitransactions()"> Refresh </button>
+        </div>
+      </div>
+ <!--the div to display mini transactions opens-->     
+    <div class="row justify-content-center" >
+      <div class="col">
+        
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Sl.No : </th>
+                      <th scope="col">Transaction ID : </th>
+                      <th scope="col">Fund Transfered From Account : </th>
+                      <th scope="col">Fund Deposited to Account :</th>
+                      <th scope="col">Fund Transfer Amount : </th>
+                      <th scope="col">Transaction Type :</th>
+                       <th scope="col">Balance on Date of Transaction :</th>
+                      <th scope="col">Date Of Transaction :</th>
+                      <th scope="col">TimeStamp Of Transaction :</th>
+                       <th scope="col">Transaction Remarks: </th>
+                      <th scope="col">Transaction Status</th>
+                    </tr>
+                 </thead>
+                    <tbody>
+                      <tr *ngFor= "let txn of minitransactions; let i = index" >
+                        <td>{{i+1}}</td>
+                        <td>{{txn.transactionid}} </td>
+                        <td> {{txn.fromaccountnumber}}</td>
+                        <td>{{txn.toaccountnumber}}</td>
+                        <td>{{txn.transactionamount}} </td>
+                        <td>{{txn.transactiontype}} </td>
+                        <td> {{txn.balanceondate}}</td>
+                        <td>{{txn.transactiondate}}</td>
+                        <td>{{txn.transactiontimestamp}} </td>
+                        <td>{{txn.transactionremarks}}</td>
+                        <td>Transaction Status</td>
+                        <td>{{txn.transactionstatus}} </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                 
+            
+        </div>
+      </div>
+      <!--the div to display mini transactions closes-->   
+
+      <!--button to go back to customer home page-->   
+      <div *ngIf="!routingbool">
+      <button [routerLink]="['/customer']" class="btn btn-primary" >Back to Customer HomePage</button>
+    </div>
+     <!--hyperlink to go back to admin home page-->
+     <div *ngIf="routingbool">
+    <a [routerLink]="['/admin']" >Back to Admin HomePage</a>
+  </div>
+    <!--button to go back to logout-->   
+      <button class="btn btn-primary" (click)="logout()"> Logout </button>
+   
+   
+    </div>
+
+    
+  
+  

@@ -1,0 +1,55 @@
+
+
+<div class="container-fluid">
+  <div class="jumbotron jumbotron-fluid text-center" style="margin-bottom:0">
+        
+    <h1>Account Summary</h1>      
+    
+</div>
+<!--the div to display Account Summary opens--> 
+ <div class="row justify-content-center" *ngFor="let acct of accounts; let i = index">
+   <div class="col">
+    <div class="card">
+        <div class="card-body">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <td>Account Number</td>
+                <td>{{acct.accountid}} </td>
+                
+              </tr>
+              <tr>
+                <td>Account Type</td>
+                <td> {{acct.accounttype}}</td>
+                
+              </tr>
+              <tr>
+                <td>Account Home Branch</td>
+                <td>{{acct.branch}}</td>
+                
+              </tr>
+              <tr>
+                <td>Account Balance</td>
+                <td>{{acct.balance}} </td>
+                
+              </tr>
+            </tbody>
+          </table>
+          <!--button  to go back to mini transactions page of this account-->
+          <button [routerLink]="['/transactions']" [state]=acct class="card-link">View Mini Transactions for Account Numer: {{acct.accountid}}</button>
+          <!--button  to go back to detailed transactions page of this account-->
+          <button [routerLink]="['/detailedtransactions']" [state]=acct class="card-link">View Detailed Transactions for Account Numer: {{acct.accountid}}</button>
+             
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <!--the div to display Account Summary closes-->
+
+ <!--button to go back to logout--> 
+  <button class="btn btn-primary" (click)="logout()"> Logout </button>
+  
+  <!--hyperlink to go back to admin home page-->
+  <a [routerLink]="['/admin']" >Back to Admin Home</a>
+</div>

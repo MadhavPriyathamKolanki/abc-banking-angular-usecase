@@ -1,0 +1,12 @@
+{
+    "customer":[
+        {
+            "customerId" : 1,
+            "password" : "password123"
+        },
+        {
+            "customerId" : 2,
+            "password" : "password456"
+        }
+    ]
+}

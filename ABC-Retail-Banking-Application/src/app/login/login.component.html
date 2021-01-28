@@ -1,0 +1,55 @@
+<div class="col-md-6 offset-md-3 mt-5">
+    <div class="alert alert-info">
+        <strong> Customer</strong> - Customer: Madhav ; P: qwerty<br />
+        <strong>Administrator</strong> - U: admin ; P: admin
+    </div>
+<!--This is the card to hold login form-->
+    <div class="card">
+        <h4 class="card-header">ABC BANKING LOGIN</h4>
+        <div class="card-body">
+         <!--login form starts here-->   
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <!--input for username-->   
+                    <label for="username">Username</label>
+                    <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                        <div *ngIf="f.username.errors.required">Username is required</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                     <!--input for password-->
+                    <label for="password">Password</label>
+                    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">Password is required</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                     <!--radio input for role-->
+                    <label for="role">Role:</label>
+                    <div>
+                      <input id="admin" type="radio" value="Admin" name="role" formControlName="role">
+                      <label for="admin">Admin</label>
+                   </div>
+                   <div>
+                      <input id="customer" type="radio" value="Customer" name="role" formControlName="role">
+                      <label for="customer">Customer</label>
+                   </div>
+                    <div *ngIf="f.role.touched && f.role.invalid" class="alert alert-danger">
+                        <div *ngIf="f.role.errors.required">Role is required.</div>
+                    </div>
+                </div>
+                 <!--button tpo submit-->
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Login
+                </button>
+                <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+            </form>
+         <!--login form ends here-->   
+        </div>
+        
+    </div>
+    
+</div>            

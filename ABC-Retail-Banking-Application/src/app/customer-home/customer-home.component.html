@@ -1,0 +1,194 @@
+<div class="container-fluid">
+<!-- jumbotron div opens -->
+    <div class="jumbotron jumbotron-fluid text-center" style="margin-bottom:0">
+        
+          <h1>ABC Retail Banking</h1>      
+          <p>Welcome to ABC Bank {{customer.lastname}}</p>
+      </div>
+<!-- jumbotron div closes -->
+<!-- nav bar opens-->
+      <nav class="navbar navbar-expand-sm bg-light justify-content-center">
+        <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#home">View My Account Summary</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#menu1">Fund Transfer</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#menu2">Update Personal details</a>
+        </li>
+        <li class="nav-item">
+            <button class="btn btn-primary" (click)="logout()"> Logout </button>
+          </li>
+       </ul>
+      </nav>
+<!-- Nav bar closes -->
+      <div class="container-fluid">
+      <!-- Tab panes -->
+      <div class="tab-content">
+<!-- Account Summary Division -->
+        <div id="home" class="container tab-pane active"><br>
+     <!-- Button to refresh accounts Div Opens -->     
+          <div class="row justify-content-center">
+            <button class="btn btn-primary" (click)="getaccounts()"> Get latest Summary of all Accounts of {{customer.lastname}} </button>
+          </div>
+          <!-- Button Div Closes -->  
+        <!-- Account summary of customer -->    
+          <div class="row justify-content-center" *ngFor="let acct of accounts; let i = index">
+            <div class="col-10">
+            <div class="card" >
+                <div class="card-body">
+                    <h4 class="card-title">Account {{i+1}}</h4>
+                    <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Account Number</th>
+                        <th scope="col">Account Balance</th>
+                        <th scope="col">Account Home Branch</th>
+                        <th scope="col">Account Type</th>
+                      </tr>
+                   </thead>
+                   
+                        <tbody>
+                          <tr>
+                           <td>{{acct.accountid}} </td>
+                            <td> {{acct.balance}}</td>
+                            <td>{{acct.branch}}</td>
+                            <td>{{acct.accounttype}} </td>
+                            
+                          </tr>
+                        </tbody>
+                      </table>
+
+                     <button [routerLink]="['/transactions']" [state]=acct class="btn btn-secondary card-link">View Mini Transactions for Account Numer: {{acct.accountid}}</button>
+                     <button [routerLink]="['/detailedtransactions']" [state]=acct class="btn btn-secondary card-link">View Detailed Transactions for Account Numer: {{acct.accountid}}</button>
+                </div>
+                
+              </div>
+            </div>
+              
+          </div>
+          <!--  Account summary of customer closes-->  
+        </div>
+<!-- Account Summary Division Closes -->
+
+<!-- Fund Transfer tab-->
+        <div id="menu1" class="container tab-pane fade"><br>
+          <h3>Fund TRANSFER</h3>
+          <div class="card">
+            <div class="card-header">ENTER DETAILS</div>
+            <div class="card-body">
+              <form [formGroup]="fundTransfer" (ngSubmit)="onSubmitFT()">
+                <div class="form-group">
+                  <label for="fromaccountnumber">Debit From Account Number:</label>
+                  <select formControlName="fromaccountnumber" class="form-control">
+                      <option *ngFor="let acct of accounts; let i = index">{{acct.accountid}}</option>
+                  </select>
+                  <div *ngIf="f.fromaccountnumber.touched && f.fromaccountnumber.invalid" class="alert alert-danger">
+                      <div *ngIf="f.fromaccountnumber.errors.required">From ACC is required.</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label for="toaccountnumber">Credit To Account number</label>
+                    <input type="number" formControlName="toaccountnumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.toaccountnumber.errors }" />
+                    <p>use account numbers's: 2,3,4</p>
+                    <div *ngIf="submitted && f.toaccountnumber.errors" class="invalid-feedback">
+                        <div *ngIf="f.toaccountnumber.errors.required">To acc is required</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="transactionamount">Transfer amount</label>
+                  <input type="number" formControlName="transactionamount" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.transactionamount.errors }" />
+                  <div *ngIf="submitted && f.transactionamount.errors" class="invalid-feedback">
+                      <div *ngIf="f.transactionamount.errors.required">amount is required</div>
+                  </div>
+                </div>
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Transfer Amount
+                </button>
+                <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+              </form>
+            </div>
+          </div>
+        </div>
+<!-- Fund Transfer div closes-->
+<!-- Update details div opens -->
+        <div id="menu2" class="container tab-pane fade"><br>
+          <h3>Update personal Details</h3>
+          <form [formGroup]="updateDetails" (ngSubmit)="onSubmitUpdt()">
+            <div class="form-row">
+                <div class="form-group col-5">
+                    <label>First Name</label>
+                    <input type="text" formControlName="firstname" class="form-control" [ngClass]="{ 'is-invalid': submitted1 && u.firstname.errors }" />
+                    <div *ngIf="submitted1 && u.firstname.errors" class="invalid-feedback">
+                        <div *ngIf="u.firstname.errors.required">First Name is required</div>
+                    </div>
+                </div>
+               <div class="form-group col-5">
+                    <label>Last Name</label>
+                    <input type="text" formControlName="lastname" class="form-control" [ngClass]="{ 'is-invalid': submitted && u.lastname.errors }" />
+                    <div *ngIf="submitted && u.lastname.errors" class="invalid-feedback">
+                        <div *ngIf="u.lastname.errors.required">Last Name is required</div>
+                    </div>
+                </div> 
+            </div>
+             <div class="form-row">
+                
+                    <label>Email</label>
+                    <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && u.email.errors }" />
+                    <div *ngIf="submitted && u.email.errors" class="invalid-feedback">
+                        <div *ngIf="u.email.errors.required">Email is required</div>
+                        <div *ngIf="u.email.errors.email">Email must be a valid email address</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                  
+                      <label>Address</label>
+                      <input type="text" formControlName="address" class="form-control" [ngClass]="{ 'is-invalid': submitted && u.address.errors }" />
+                      <div *ngIf="submitted && u.address.errors" class="invalid-feedback">
+                          <div *ngIf="u.address.errors.required">address is required</div>
+                          </div>
+                  </div>
+                  <div class="form-row">
+                    
+                        <label>User Name</label>
+                        <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && u.username.errors }" />
+                        <div *ngIf="submitted && u.username.errors" class="invalid-feedback">
+                            <div *ngIf="u.username.errors.required">Email is required</div>
+                        </div>
+                    </div>
+    
+            <div class="form-row">
+                <div class="form-group col">
+                    <label>Password</label>
+                    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted1 && u.password.errors }" />
+                    <div *ngIf="submitted && u.password.errors" class="invalid-feedback">
+                        <div *ngIf="u.password.errors.required">Password is required</div>
+                        <div *ngIf="u.password.errors.minlength">Password must be at least 6 characters</div>
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <label>Confirm Password</label>
+                    <input type="password" formControlName="confirmpass" class="form-control" [ngClass]="{ 'is-invalid': submitted1 && u.confirmpass.errors }" />
+                    <div *ngIf="submitted1 && u.confirmpass.errors" class="invalid-feedback">
+                        <div *ngIf="u.confirmpass.errors.required">Confirm Password is required</div>
+                        <div *ngIf="u.confirmpass.errors.mustMatch">Passwords must match</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button [disabled]="loading1" class="btn btn-primary">
+                    <span *ngIf="loading1" class="spinner-border spinner-border-sm mr-1"></span>
+                    Update
+                </button>
+                
+            </div>
+        </form>
+        </div>
+<!-- Update details div closes -->
+      </div>
+</div>
+</div>

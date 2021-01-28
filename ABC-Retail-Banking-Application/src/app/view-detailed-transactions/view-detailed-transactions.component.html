@@ -1,0 +1,171 @@
+
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    
+    <div class="col-4">
+       <!--button to go back to customer home page--> 
+       <div *ngIf="!routingbool">
+    <button [routerLink]="['/customer']" class="btn btn-primary" >Back to Customer HomePage</button>
+    </div>
+    <!--hyperlink to go back to admin home page-->
+    <div *ngIf="routingbool">
+  <a [routerLink]="['/admin']" >Back to Admin HomePage</a>
+  </div>
+    </div>
+    <div class="col-4">
+      <!--button to go back to logout--> 
+    <button class="btn btn-primary" (click)="logout()"> Logout </button>
+  </div>
+</div>
+  <h1>Get Detailed Transactions By</h1>
+  <!--the div to display radio buttons opens-->   
+    <div class="row">
+        
+<div class="col-3">
+    <div class="radio">  
+        <label>  
+            <input type="radio" id="date" name="txn" value="byfromdateandtodate" (click)="setradio('byfromdateandtodate')"
+             [checked]='true' ngModel> 
+              By Transaction From Date And To Date
+              </label>
+                
+    </div>
+</div>
+<div class="col-3">
+    <div class="radio">  
+        <label>  
+         <input type="radio" id="amount" name="txn" value="bytransactionamount" (click)="setradio('bytransactionamount')" ngModel>  
+        By Transaction Amount within A range
+        </label>
+                
+    </div>
+</div>
+<div class="col-3">
+    <div class="radio">  
+        <label>  
+         <input type="radio" id="fromact" name="txn" value="byfromaccountnumber" (click)="setradio('byfromaccountnumber')" ngModel>  
+        By From Accout
+        </label>
+        </div>
+</div>
+<div class="col-3">
+    <div class="radio">  
+        <label>  
+         <input type="radio" id="toact" name="txn" value="bytoaccountnumber" (click)="setradio('bytoaccountnumber')" ngModel>  
+        By To Account
+        </label>
+                
+    </div>
+</div>
+
+    </div>
+    <!--the div to display radio buttons closes-->
+    <!--the div to display from groups opens-->
+    <div class="row">
+        <div class="col-3">
+           <!--the div to display searchbydate from group-->
+            <div *ngIf="isSelected('byfromdateandtodate')" >  
+                <form [formGroup]="searchbydate" (ngSubmit)="onDateSubmit()">
+                    <div class="form-group">
+                      <label>From Date:</label>
+                      <div class="input-group">
+                        <input type="date" class="form-control" id="fromdate" name="fromdate" formControlName="fromdate">
+                        <p style="color: green;">ex: give 2000 december as start date</p>
+                      </div>
+                      <label>To Date:</label>
+                      <div class="input-group">
+                        <input type="date" class="form-control" id="todate" name="todate" formControlName="todate">
+                        <p style="color: green;">ex: give 2005 december as end date</p>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary">submit</button>
+                </form> 
+              </div>  
+             
+        </div>
+        <div class="col-3">
+          <!--the div to display searchbyamt from group ie min and max amounts-->
+            <div *ngIf="isSelected('bytransactionamount')" >  
+                <form [formGroup]="searchbyamt" (ngSubmit)="onAmtSubmit()">
+                    <div class="form-group">
+                        <label for="minamnt">Minimum Transaction Amount</label>
+                        <input type="number" id="minamnt" formControlName="minamnt" class="form-control" />
+                        <p style="color: green;">ex: give 100 as min amnt</p>
+                        <label for="maxamnt">Maxiimum Transaction Amount</label>
+                        <input type="number" id="maxamnt" formControlName="maxamnt" class="form-control" />
+                        <p style="color: green;">ex: give 900 as max amnt</p>
+                    </div>
+                    <button class="btn btn-primary">Submit</button>
+                </form> 
+              </div> 
+        </div>
+        <div class="col-3 ">
+          <!--the div to display searchByFromAccount from group-->
+            <div *ngIf="isSelected('byfromaccountnumber')" >  
+              <form [formGroup]="searchByFromAccount" (ngSubmit)="onFromAccountSubmit()">
+                <div class="form-group">
+                    <label for="fromaccid">Search By From Account Number</label>
+                    <input type="number" id="fromaccid" formControlName="fromaccid" class="form-control" />
+                    <p style="color: green;">ex: give 1 as from account no</p>
+                </div>
+                <button class="btn btn-primary">Submit</button>
+            </form> 
+              </div> 
+        </div>
+        <div class="col-3 ">
+          <!--the div to display SearchByToAccount from group-->
+            <div *ngIf="isSelected('bytoaccountnumber')" >  
+              <form [formGroup]="SearchByToAccount" (ngSubmit)="onToAccountSubmit()">
+                <div class="form-group">
+                    <label for="toaccid">Search By to Account Number</label>
+                    <input type="number" id="toaccid" formControlName="toaccid" class="form-control" />
+                    <p style="color: green;">ex: give 2 as account no</p>
+                </div>
+                <button class="btn btn-primary">Submit</button>
+            </form> 
+              </div> 
+        </div>
+    </div>
+     <!--the div to display from groups closes-->
+
+    <!--the div to display table of transactions recieved from backend opens-->
+    <div class="row justify-content-center" >
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Sl.No : </th>
+            <th scope="col">Transaction ID : </th>
+            <th scope="col">Fund Transfered From Account : </th>
+            <th scope="col">Fund Deposited to Account :</th>
+            <th scope="col">Fund Transfer Amount : </th>
+            <th scope="col">Transaction Type :</th>
+             <th scope="col">Balance on Date of Transaction :</th>
+            <th scope="col">Date Of Transaction :</th>
+            <th scope="col">TimeStamp Of Transaction :</th>
+             <th scope="col">Transaction Remarks: </th>
+            <th scope="col">Transaction Status</th>
+          </tr>
+       </thead>
+          <tbody>
+            <tr *ngFor="let txn of detailedtransactions; let i = index" >
+              <td>{{i+1}}</td>
+              <td>{{txn.transactionid}} </td>
+              <td> {{txn.fromaccountnumber}}</td>
+              <td>{{txn.toaccountnumber}}</td>
+              <td>{{txn.transactionamount}} </td>
+              <td>{{txn.transactiontype}} </td>
+              <td> {{txn.balanceondate}}</td>
+              <td>{{txn.transactiondate}}</td>
+              <td>{{txn.transactiontimestamp}} </td>
+              <td>{{txn.transactionremarks}}</td>
+              <td>Transaction Status</td>
+              <td>{{txn.transactionstatus}} </td>
+            </tr>
+          </tbody>
+        </table>
+       </div>
+       <!--the div to display table of transactions recieved from backend closes-->
+
+       <!--button to call a method in component to export table as an excel sheet-->
+    <button (click)="exportexcel()" class="btn btn-success">ExportTOExcel</button>
+</div>

@@ -1,0 +1,61 @@
+<div class="container-fluid">
+  <div class="jumbotron jumbotron-fluid text-center" style="margin-bottom:0">
+        
+    <h1>Updated Details</h1>      
+    
+</div>
+<!--the div to display updated customer detais opens--> 
+  <div class="row justify-content-center">
+    <table class="table table-hover">
+        <tbody>
+          <tr>
+            <td>Customer ID</td>
+            <td>{{customer.customerid}} </td>
+            
+          </tr>
+          <tr>
+            <td>First Name</td>
+            <td> {{customer.firstname}}</td>
+            
+          </tr>
+          <tr>
+            <td>Customer Lastname</td>
+            <td>{{customer.lastname}}</td>
+            
+          </tr>
+          <tr>
+            <td>Customer username</td>
+            <td>{{customer.username}} </td>
+            
+          </tr>
+          <tr>
+            <td>Customer password</td>
+            <td> {{customer.password}}</td>
+            
+          </tr>
+          <tr>
+            <td>Customer address</td>
+            <td>{{customer.address}}</td>
+            
+          </tr>
+          <tr>
+            <td>Customer email</td>
+            <td>{{customer.email}}</td>
+            
+          </tr>
+        </tbody>
+      </table>
+</div>
+<!--the div to display updated customer detais opens--> 
+<div class="row">
+  <div class="col-4">
+    <!--hyperlink to go back to customer home page-->
+  <a [routerLink]="['/customer']"  >Back to Customer HomePage</a>
+ </div>
+  
+  <div class="col-4">
+    <!--button to go back to logout-->
+  <button class="btn btn-primary" (click)="logout()"> Logout </button>
+</div>
+</div>
+</div>

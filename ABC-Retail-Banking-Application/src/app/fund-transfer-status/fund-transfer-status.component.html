@@ -1,0 +1,86 @@
+
+<div class="container-fluid">
+  <div class="jumbotron jumbotron-fluid text-center" style="margin-bottom:0">
+        
+    <h1>Fund Transfer Status</h1>      
+    
+</div>
+    <div class="row justify-content-center">
+        <h1>Transfer Successful</h1>
+    </div>
+     <!--the div to display transaction opens--> 
+    <div class="row justify-content-center">
+      <div class="col">
+       <div class="card">
+           <div class="card-body">
+            <table class="table table-hover">
+              <tbody>
+                <tr>
+                  <td>Transaction ID : </td>
+                  <td>{{transaction.transactionid}} </td>
+                  
+                </tr>
+                <tr>
+                  <td>Fund Transfered From Account : </td>
+                  <td> {{transaction.fromaccountnumber}}</td>
+                  
+                </tr>
+                <tr>
+                  <td>Fund Deposited to Account : </td>
+                  <td>{{transaction.toaccountnumber}}</td>
+                  
+                </tr>
+                <tr>
+                  <td>Fund Transfer Amount : </td>
+                  <td>{{transaction.transactionamount}} </td>
+                </tr>
+                <tr>
+                  <td>Transaction Type : </td>
+                  <td>{{transaction.transactiontype}} </td>
+                  
+                </tr>
+                <tr>
+                  <td>Balance on Date of Transaction : </td>
+                  <td> {{transaction.balanceondate}}</td>
+                  
+                </tr>
+                <tr>
+                  <td>Date Of Transaction : </td>
+                  <td>{{transaction.transactiondate}}</td>
+                  
+                </tr>
+                <tr>
+                  <td>TimeStamp Of Transaction : </td>
+                  <td>{{transaction.transactiontimestamp}} </td>
+                </tr>
+                <tr>
+                  <td>Transaction Remarks: </td>
+                  <td>{{transaction.transactionremarks}}</td>
+                  
+                </tr>
+                <tr>
+                  <td>Transaction Status</td>
+                  <td>{{transaction.transactionstatus}} </td>
+                </tr>
+              </tbody>
+            </table>
+                
+           </div>
+           
+         </div>
+         <div class="row">
+         <div class="col-4">
+            <!--hyperlink to go back to customer home page-->
+         <a [routerLink]="['/customer']" >Back to Customer HomePage</a>
+        </div>
+         
+         <div class="col-4">
+         <!--button to go back to logout-->  
+         <button class="btn btn-primary" (click)="logout()"> Logout </button>
+       </div>
+    </div>
+        </div>
+     </div>
+      <!--the div to display transaction closes--> 
+   
+   </div>
